@@ -1,0 +1,45 @@
+name: Build APK with EAS (Standalone)
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'server/**'  # Ignore server changes - client is standalone now
+      - 'README.md'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Build APK (Standalone - no server needed)
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas build --platform android --type apk --non-interactive
+
+      - name: Upload APK to Releases
+        if: success()
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            **/*.apk
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          fail_on_unmatched_files: false
