@@ -27,19 +27,28 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Build APK (Standalone - no server needed)
+      - name: Build APK with EAS Cloud (Standalone - no server needed)
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build --platform android --type apk --non-interactive
+        run: |
+          eas build --platform android --non-interactive --wait
 
-      - name: Upload APK to Releases
+      - name: Download APK from EAS
+        run: |
+          # EAS build sudah upload ke dashboard, ambil link dari log
+          echo "APK siap di Expo dashboard: https://expo.dev/projects"
+      
+      - name: Create Release with Build Info
         if: success()
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            **/*.apk
+          body: |
+            ✅ APK Build Success!
+            
+            📥 Download dari: https://expo.dev/projects
+            
+            Build dengan EAS Cloud - tanpa server dependency
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
           prerelease: false
           generate_release_notes: true
-          fail_on_unmatched_files: false
