@@ -31,7 +31,7 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          eas build --platform android --non-interactive --wait 2>&1 || true
+          npx eas-cli build --platform android --profile preview --non-interactive --wait
           
       - name: Check Build Status
         run: |
@@ -40,15 +40,22 @@ jobs:
       
       - name: Create Release with Build Info
         if: success()
-        uses: softprops/action-gh-release@v2
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: build-${{ github.run_number }}
+          release_name: APK Build ${{ github.run_number }}
           body: |
             ✅ APK Build Success!
             
-            📥 Download dari: https://expo.dev/projects
+            📥 Download APK dari: https://expo.dev/projects
             
-            Build dengan EAS Cloud - tanpa server dependency
-          token: ${{ secrets.GITHUB_TOKEN }}
+            **Build Details:**
+            - Build Profile: preview (preview-signed)
+            - Platform: Android APK
+            - Status: ✅ Success
+            
+            Build configuration: Standalone (no server dependency required)
           draft: false
           prerelease: false
-          generate_release_notes: true

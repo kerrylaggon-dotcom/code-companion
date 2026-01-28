@@ -49,6 +49,12 @@
         "projectId": "29ef4024-0fb5-49be-a903-727447541f32"
       }
     },
-    "owner": "kerrylaggon"
+    "owner": "kerrylaggon",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/29ef4024-0fb5-49be-a903-727447541f32"
+    }
   }
 }
