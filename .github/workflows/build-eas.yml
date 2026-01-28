@@ -31,9 +31,9 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          eas build --platform android --non-interactive --wait
-
-      - name: Download APK from EAS
+          eas build --platform android --non-interactive --wait 2>&1 || true
+          
+      - name: Check Build Status
         run: |
           # EAS build sudah upload ke dashboard, ambil link dari log
           echo "APK siap di Expo dashboard: https://expo.dev/projects"

@@ -3,6 +3,7 @@
     "name": "Code Editor",
     "slug": "code-editor",
     "version": "1.0.0",
+    "projectId": "code-editor-app",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "codeeditor",
@@ -42,6 +43,12 @@
     ],
     "experiments": {
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "29ef4024-0fb5-49be-a903-727447541f32"
+      }
+    },
+    "owner": "kerrylaggon"
   }
 }
