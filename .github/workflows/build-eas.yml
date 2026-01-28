@@ -31,7 +31,7 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          npx eas-cli build --platform android --profile preview --non-interactive --wait
+          npx eas-cli build --platform android --profile production --non-interactive --wait
           
       - name: Check Build Status
         run: |
